@@ -36,8 +36,8 @@ namespace samples_1 {
 		const auto end = std::chrono::steady_clock::now();
 		std::cout
 			<< "Slow calculations took "
-			<< std::chrono::duration_cast<std::chrono::microseconds>(end - start) << " ≈ "
-			<< (end - start) / 1ms << "ms ≈ " // almost equivalent form of the above, but
+			<< std::chrono::duration_cast<std::chrono::microseconds>(end - start) << " ~ "
+			<< (end - start) / 1ms << "ms ~ " // almost equivalent form of the above, but
 			<< (end - start) / 1s << "s.\n";  // using milliseconds and seconds accordingly
 		return 0;
 	}

@@ -1,7 +1,7 @@
 #include "Canvas.h"
 
-constexpr int min(int x, int y) { return x < y ? x : y; }
-constexpr int max(int x, int y) { return x > y ? x : y; }
+static constexpr int min(int x, int y) { return x < y ? x : y; }
+static constexpr int max(int x, int y) { return x > y ? x : y; }
 
 void Canvas::clear()
 {
@@ -23,7 +23,7 @@ void Canvas::line(int x1, int y1, int x2, int y2)
 	else {
 		float m = 1.0f * (y1 - y2) / (x1 - x2);
 		float q = 1.0f * (x1 * y2 - x2 * y1) / (x1 - x2);
-		for (float x = minx; x <= maxx; x += .1f) {
+		for (float x = static_cast<float>(minx); x <= maxx; x += .1f) {
 			setPoint(static_cast<int>(x), static_cast<int>(m * x + q));
 		}
 	}
