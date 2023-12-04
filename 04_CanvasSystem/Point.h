@@ -16,7 +16,5 @@ struct Point
 		int dy = y - p.y;
 		return static_cast<float>(sqrt(dx * dx + dy * dy));
 	}
-
-	friend float operator-(Point& f, Point& s) { return f.dist(s); }
 };
 
