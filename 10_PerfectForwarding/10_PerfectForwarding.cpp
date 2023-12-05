@@ -84,7 +84,7 @@ namespace third_attempt {
 namespace expansion {
 #include <iostream>
 
-	void tprintf(const char* format) // base function called at the end of expansion
+	static void tprintf(const char* format) // base function called at the end of expansion
 	{
 		std::cout << " from base: `" << format << '`';
 	}

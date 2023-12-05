@@ -1,7 +1,9 @@
 #pragma once
 #include "Canvas.h"
 #include "Point.h"
-
+/// <summary>
+/// Base classe for all shapes.
+/// </summary>
 class Shape
 {
 private:

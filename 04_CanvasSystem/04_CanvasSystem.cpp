@@ -10,7 +10,10 @@
 #include "BitmapCanvas.h"
 
 using namespace std;
-
+/// <summary>
+/// Print a canvas on the screen.
+/// </summary>
+/// <param name="canvas">The canvas to print.</param>
 static void print(const Canvas& canvas) {
 	int w = canvas.getWidth();
 	int h = canvas.getHeight();
@@ -25,7 +28,11 @@ static void print(const Canvas& canvas) {
 		cout << endl;
 	}
 }
-
+/// <summary>
+/// Make some graphics on the canvas.
+/// </summary>
+/// <param name="canvas">The canvas.</param>
+/// <param name="multiplier">The magnifier factor to perform a zoom when draw.</param>
 static void makeGraphics(Canvas& canvas, int multiplier = 1) {
 	Rectangle{ 5*multiplier, 10 * multiplier, 20 * multiplier, 20 * multiplier }.draw(canvas);
 	Square{ 12 * multiplier, 12 * multiplier, 10 * multiplier }.draw(canvas);

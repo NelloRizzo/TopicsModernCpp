@@ -2,7 +2,9 @@
 #include <math.h>
 #include "Shape.h"
 #include "Canvas.h"
-
+/// <summary>
+/// An ellipse.
+/// </summary>
 class Ellipse :public Shape
 {
 private:

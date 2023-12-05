@@ -7,6 +7,9 @@ int main()
 	cout << "Items in vector incremented by 1" << endl;
 	for (auto c : v)
 		cout << ++c << endl;
+	cout << "Items in vector after increment" << endl;
+	for (auto c : v)
+		cout << c << endl;
 	cout << "Items as reference in vector incremented by 1" << endl;
 	for (auto& c : v)
 		cout << ++c << endl;

@@ -3,7 +3,7 @@
 
 struct My {
 	int value;
-	friend std::ostream& operator<<(std::ostream& s, const My& m) {
+	static friend std::ostream& operator<<(std::ostream& s, const My& m) {
 		return s << "My(" << m.value << ")";
 	}
 };

@@ -1,6 +1,8 @@
 #pragma once
 #include "Ellipse.h"
-
+/// <summary>
+/// A circle.
+/// </summary>
 class Circle :public Ellipse
 {
 public:
