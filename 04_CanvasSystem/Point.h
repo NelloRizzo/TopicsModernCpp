@@ -1,6 +1,8 @@
 #pragma once
 #include <math.h>
-
+/// <summary>
+/// A 2D point.
+/// </summary>
 struct Point
 {
 	int x;

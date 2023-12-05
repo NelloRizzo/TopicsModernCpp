@@ -1,7 +1,9 @@
 #pragma once
 #include "Canvas.h"
 #include "Shape.h"
-
+/// <summary>
+/// A rectangle.
+/// </summary>
 class Rectangle :public Shape
 {
 public:

@@ -7,7 +7,6 @@ struct Container {
     T value;
 };
 
-// which can be used in generic programming
 template<typename ContainerT>
 void info(const ContainerT& c)
 {
