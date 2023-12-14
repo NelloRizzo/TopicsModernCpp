@@ -10,7 +10,7 @@
 #include <syncstream>
 
 namespace thread_samples {
-	void f1(int n)
+	static void f1(int n)
 	{
 		for (int i = 0; i < 5; ++i)
 		{
@@ -20,7 +20,7 @@ namespace thread_samples {
 		}
 	}
 
-	void f2(int& n)
+	static void f2(int& n)
 	{
 		for (int i = 0; i < 5; ++i)
 		{
@@ -86,7 +86,7 @@ namespace thread_samples {
 namespace jthread_samples {
 	using namespace std::literals;
 
-	void f1(int n)
+	static void f1(int n)
 	{
 		for (int i = 0; i < 5; ++i)
 		{
@@ -96,7 +96,7 @@ namespace jthread_samples {
 		}
 	}
 
-	void f2(int& n)
+	static void f2(int& n)
 	{
 		for (int i = 0; i < 5; ++i)
 		{
@@ -162,7 +162,7 @@ namespace atomic_samples {
 	std::atomic_int acnt;
 	int cnt;
 
-	void f()
+	static void f()
 	{
 		for (int n = 0; n < 10000; ++n)
 		{
@@ -191,7 +191,7 @@ namespace mutex_samples {
 	std::map<std::string, std::string> g_pages;
 	std::mutex g_pages_mutex;
 
-	void save_page(const std::string& url)
+	static void save_page(const std::string& url)
 	{
 		// simulate a long page fetch
 		std::this_thread::sleep_for(std::chrono::seconds(2));

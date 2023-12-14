@@ -1,11 +1,18 @@
 // perfectForwarding1.cpp
 
 #include <iostream>
+using namespace std;
 
 namespace first_attempt {
 
 	template <typename T, typename Arg>
 	T create(Arg& a) {
+		cout << "Chiamata a create(Arg& " << a << ")" << endl;
+		return T(a);
+	}
+	template <typename T, typename Arg>
+	T create_(Arg a) {
+		cout << "Chiamata a create(Arg " << a << ")" << endl;
 		return T(a);
 	}
 
@@ -20,8 +27,8 @@ namespace first_attempt {
 		std::cout << "myFive: " << myFive << std::endl;
 
 		// Rvalues
-		// This dont compile due to rvalue 5 in the function call
-		//int myFive2 = create<int>(5);
+		// This dont compile due to rvalue 5 in the function call 
+		int myFive2 = create_<int>(5);
 		//std::cout << "myFive2: " << myFive2 << std::endl;
 
 		std::cout << std::endl;
@@ -31,11 +38,13 @@ namespace first_attempt {
 namespace second_attempt {
 	template <typename T, typename Arg>
 	T create(Arg& a) {
+		cout << "Chiamata a create(Arg&)" << endl;
 		return T(a);
 	}
 
 	template <typename T, typename Arg>
 	T create(const Arg& a) {
+		cout << "Chiamata a create(const Arg&)" << endl;
 		return T(a);
 	}
 
@@ -68,7 +77,7 @@ namespace third_attempt {
 		std::cout << std::endl;
 
 		// Lvalues
-		int five = 5;
+		int five = 7;
 		int myFive = create<int>(five);
 		std::cout << "myFive: " << myFive << std::endl;
 
@@ -99,11 +108,11 @@ namespace expansion {
 				// put value param
 				std::cout << value;
 				// recursive call to this template
-				tprintf(format + 1, Fargs...); 
+				tprintf(format + 1, Fargs...);
 				return;
 			}
 			// put next char
-			std::cout << *format ;
+			std::cout << *format;
 		}
 	}
 
@@ -114,7 +123,8 @@ namespace expansion {
 	}
 }
 int main() {
-	second_attempt::main();
-	third_attempt::main();
+	//first_attempt::main();
+	//second_attempt::main();
+	//third_attempt::main();
 	expansion::main();
 }

@@ -2,7 +2,7 @@
 #include "Canvas.h"
 #include "Point.h"
 /// <summary>
-/// Base classe for all shapes.
+/// Base class for all shapes.
 /// </summary>
 class Shape
 {
