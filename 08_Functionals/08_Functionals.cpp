@@ -3,7 +3,7 @@
 
 struct My {
 	int value;
-	friend std::ostream& operator<<(std::ostream& s, const My& m) {
+	static friend std::ostream& operator<<(std::ostream& s, const My& m) {
 		return s << "My(" << m.value << ")";
 	}
 };
@@ -23,8 +23,22 @@ int main()
 	l.append(new My{ 30 });
 
 	l.navigate(PrintFunctor{});
-	l.navigate([](const My* item) { std::cout << "My(" << item->value << ")" << std::endl; });
+	PrintFunctor pf;
+	l.navigate(pf);
+	l.navigate(
+		[](const My* item) 
+		{ std::cout << "My(" << item->value << ")" << std::endl; }
+	);
 
+	std::cout << "Min: ";
+	int min; std::cin >> min;
+	std::cout << "Max: ";
+	int max; std::cin >> max;
 	std::cout << "Search in the list:" << std::endl;
-	l.navigate([](const My* item) { if (item->value < 30 && item->value > 10) std::cout << *item << std::endl; });
+	l.navigate(
+		[=](const My* item)
+		{ 
+			if (item->value >= min && item->value <= max) std::cout << *item << std::endl;
+		}
+	);
 }

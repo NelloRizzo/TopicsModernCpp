@@ -5,7 +5,7 @@
 template<class T>
 class Functor {
 public:
-	virtual void operator()(const T* item) = 0;
+	virtual void operator()(const T*) = 0;
 };
 
 template<class T>

@@ -38,7 +38,7 @@ namespace samples_1 {
 			<< "Slow calculations took "
 			<< std::chrono::duration_cast<std::chrono::microseconds>(end - start) << " ~ "
 			<< (end - start) / 1ms << "ms ~ " // almost equivalent form of the above, but
-			<< (end - start) / 1s << "s.\n";  // using milliseconds and seconds accordingly
+			<< (end - start) / 1ns << "ns.\n";  // using milliseconds and seconds accordingly
 		return 0;
 	}
 }
