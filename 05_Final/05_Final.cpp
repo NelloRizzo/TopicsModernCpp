@@ -129,10 +129,12 @@ static Generator<std::string> anagrams(std::string word) {
 	do {
 		if (isValid(word))
 			co_yield word;
-		else
-			co_yield "INVALID " + word;
+		//else
+			//co_yield "INVALID " + word;
 	} while (std::next_permutation(word.begin(), word.end()));
 }
+
+#include <coroutine>
 
 int main()
 {

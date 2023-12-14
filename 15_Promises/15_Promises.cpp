@@ -12,17 +12,19 @@
 #include <string>
 
 namespace promise_samples {
-	void accumulate(std::vector<int>::iterator first,
+	static void accumulate(std::vector<int>::iterator first,
 		std::vector<int>::iterator last,
 		std::promise<int> accumulate_promise)
 	{
 		int sum = std::accumulate(first, last, 0);
+		std::this_thread::sleep_for(std::chrono::seconds(2));
 		accumulate_promise.set_value(sum); // Notify future
 	}
 
-	void do_work(std::promise<void> barrier)
+	static void do_work(std::promise<void> barrier)
 	{
 		std::this_thread::sleep_for(std::chrono::seconds(1));
+		std::cout << "Sending notification" << std::endl;
 		barrier.set_value();
 	}
 
@@ -47,17 +49,27 @@ namespace promise_samples {
 		std::future<void> barrier_future = barrier.get_future();
 		std::thread new_work_thread(do_work, std::move(barrier));
 		barrier_future.wait();
+		std::cout << "Notification received" << std::endl;
 		new_work_thread.join();
 		return 0;
 	}
 }
-namespace packaged_task_samples {
-	// unique function to avoid disambiguating the std::pow overload set
-	int f(int x, int y) { return static_cast<int>(std::pow(x, y)); }
 
-	void task_lambda()
+namespace packaged_task_samples {
+
+	// unique function to avoid disambiguating the std::pow overload set
+	static int f(int x, int y) {
+		std::this_thread::sleep_for(std::chrono::seconds(2));
+		return static_cast<int>(std::pow(x, y));
+	}
+
+	static void task_lambda()
 	{
-		std::packaged_task<int(int, int)> task([](int a, int b) {return static_cast<int>(std::pow(a, b)); });
+		std::packaged_task<int(int, int)> task(
+			[](int a, int b) {
+				return static_cast<int>(std::pow(a, b));
+			});
+
 		std::future<int> result = task.get_future();
 
 		task(2, 9);
@@ -65,7 +77,7 @@ namespace packaged_task_samples {
 		std::cout << "task_lambda:\t" << result.get() << '\n';
 	}
 
-	void task_bind()
+	static void task_bind()
 	{
 		std::packaged_task<int()> task(std::bind(f, 2, 11));
 		std::future<int> result = task.get_future();
@@ -75,14 +87,11 @@ namespace packaged_task_samples {
 		std::cout << "task_bind:\t" << result.get() << '\n';
 	}
 
-	void task_thread()
+	static void task_thread()
 	{
 		std::packaged_task<int(int, int)> task(f);
 		std::future<int> result = task.get_future();
-
-		std::thread task_td(std::move(task), 2, 10);
-		task_td.join();
-
+		task(2, 10);
 		std::cout << "task_thread:\t" << result.get() << '\n';
 	}
 
@@ -95,6 +104,7 @@ namespace packaged_task_samples {
 		return 0;
 	}
 }
+
 namespace async_samples {
 	std::mutex m;
 
@@ -123,13 +133,14 @@ namespace async_samples {
 	template<typename RandomIt>
 	int parallel_sum(RandomIt beg, RandomIt end)
 	{
+		std::cout << "Thread " <<
+			std::this_thread::get_id() << "(" << *beg << "," << *(end - 1) << ")" << std::endl;
 		auto len = end - beg;
-		if (len < 1000)
+		if (len < 10000)
 			return std::accumulate(beg, end, 0);
 
 		RandomIt mid = beg + len / 2;
-		auto handle = std::async(std::launch::async,
-			parallel_sum<RandomIt>, mid, end);
+		auto handle = std::async(std::launch::async, parallel_sum<RandomIt>, mid, end);
 		int sum = parallel_sum(beg, mid);
 		return sum + handle.get();
 	}
@@ -138,7 +149,7 @@ namespace async_samples {
 	{
 		std::cout << "\n***** async\n";
 
-		std::vector<int> v(100000, 1);
+		std::vector<int> v(100000); std::iota(v.begin(), v.end(), 0);
 		std::cout << "The sum is " << parallel_sum(v.begin(), v.end()) << '\n';
 
 		X x;
@@ -156,8 +167,9 @@ namespace async_samples {
 		return 0;
 	} // if a1 is not done at this point, destructor of a1 prints "Hello 42" here
 }
+
 int main() {
-	promise_samples::main();
-	packaged_task_samples::main();
+	//promise_samples::main();
+	//packaged_task_samples::main();
 	async_samples::main();
 }
