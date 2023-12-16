@@ -7,7 +7,7 @@
 /// Requisito di ordinamento per gli elementi della lista
 /// </summary>
 template<class T>
-concept Ordered = requires (T t1, T t2) { {t1 > t2 } -> std::_Implicitly_convertible_to<bool>; };
+concept Ordered = requires (T& t1, T& t2) { {t1 > t2 } -> std::_Implicitly_convertible_to<bool>; };
 
 template<Ordered T> class OrderedList;
 
